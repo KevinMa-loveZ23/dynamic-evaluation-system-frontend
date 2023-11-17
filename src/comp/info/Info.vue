@@ -3,7 +3,10 @@ import { ref } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { store } from "@/store/store"
-import { Post } from "@/web/comm"
+// import { Post } from "@/web/comm"
+
+import { uploadJsonFile } from './info'
+
 const disable_upload = ref(false)
 const uploadRef = ref()
 const submitUpload = () => {
@@ -24,24 +27,30 @@ const handleRequest = (e) => {
         // const fileData = fileReader.target.result;
         // console.log(JSON.parse(fileData));
         // console.log(JSON.parse(reader.result));
-        try {
-            const response = await new Post()
-                .url("api","info")
-                .bodyObject(JSON.parse(reader.result))
-                .send()
-            ElMessage({
-                message: "上传成功",
-                type: "success"
-            })
-        } catch (error) {
-            ElMessage.error(error.toString())
-        }
+        // try {
+        //     const response = await new Post()
+        //         .url("api","info")
+        //         .bodyObject(JSON.parse(reader.result))
+        //         .send()
+        //     ElMessage({
+        //         message: "上传成功",
+        //         type: "success"
+        //     })
+        // } catch (error) {
+        //     ElMessage.error(error.toString())
+        // }
+        await uploadJsonFile(reader.result)
+        ElMessage({
+            message: "上传成功",
+            type: "success"
+        })
         uploadRef.value.clearFiles()
         disable_upload.value = false
     }
 }
 </script>
 <template>
+    <div>仅保留用于调试</div>
     <el-upload
         drag
         ref="uploadRef"
@@ -58,7 +67,7 @@ const handleRequest = (e) => {
         </div>
         <template #tip>
         <div>
-            文件限制提示，记得改
+            只允许上传 Json 文件
         </div>
         </template>
     </el-upload>

@@ -1,6 +1,12 @@
 import { reactive } from 'vue'
 export const store = reactive({
     baseUrl: "http://localhost:8000",
+    inputDisable: false,
+    timeOutTime: 2000,
+    error_messages: new Map([
+      ['timeoutError', "超时！"],
+      ['illegalInputError', "非法输入！"]
+    ]),
     list_names: [
         [
           {name: "帖子Posts", path: "posts"},

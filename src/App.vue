@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 
-import PostsHeat from './comp/posts/PostsHeat.vue'
-import PostsInfluence from './comp/posts/PostsInfluence.vue';
-import UsersHeat from './comp/users/UsersHeat.vue';
-import UsersInfluence from './comp/users/UsersInfluence.vue';
+// import PostsHeat from './comp/posts/PostsHeat.vue'
+// import PostsInfluence from './comp/posts/PostsInfluence.vue';
+// import UsersHeat from './comp/users/UsersHeat.vue';
+// import UsersInfluence from './comp/users/UsersInfluence.vue';
 
 import { store } from '@/store/store'
 
@@ -69,14 +69,28 @@ function selectItem(index, indexPath, item, routerResult) {
   <main>
     <TheWelcome />
   </main> -->
-  <el-container>
-      <el-header>Header</el-header>
-      <el-container>
-        <el-aside width="200px">
+  <div :style="{display: 'flex', justifyContent: 'center', alignItems: 'center'}">
+    <el-container :style="{
+      height: '75vh', width:'75vw',
+      borderRadius: 'var(--el-border-radius-base)', border: '1px solid var(--el-border-color)'
+      }">
+      <el-header :style="{
+        height: '10%', magrin: 'auto', top: '50%',
+        borderBottom: '1px solid var(--el-border-color)',
+        display: 'flex', alignItems: 'center'
+        }">
+        <span>稳定社区影响力评估系统</span>
+      </el-header>
+      <el-container height="90%">
+        <el-aside :style="{
+          width: '20%', minWidth: '15%'
+        }">
           <el-menu
+            :style="{
+              height: '100%'
+            }"
             :default-openeds="openeds"
             :router="true"
-            class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
             @select="selectItem"
@@ -105,11 +119,15 @@ function selectItem(index, indexPath, item, routerResult) {
           <el-card>
             <template #header>{{ currentItemName }}</template>
             <!-- <PostsInfluence/> -->
-            <router-view></router-view>
+            <!-- <el-scrollbar max-height="45vh"> -->
+              <router-view></router-view>
+            <!-- </el-scrollbar> -->
           </el-card>
         </el-main>
       </el-container>
     </el-container>
+  </div>
+
 </template>
 
 <style scoped>

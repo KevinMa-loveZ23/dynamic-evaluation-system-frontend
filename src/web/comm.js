@@ -38,6 +38,12 @@ class HttpAction {
   // }
   // 可以重复地调用url()来添加路径，或一次性添加
   // 注意：get-query已经在Get类中实现
+
+  /**
+   * 
+   * @param  {...string} paths 
+   * @returns {HttpAction}
+   */
   url(...paths) {
     paths.map((path) => {
       this._generalUrl += "/" + String(path);
@@ -46,18 +52,33 @@ class HttpAction {
     return this;
   }
 
+  /**
+   * 
+   * @param {string} method 
+   * @returns {HttpAction}
+   */
   method(method) {
     this._method = method;
     this.setMethod = true;
     return this;
   }
 
+  /**
+   * 
+   * @param {object} headers 
+   * @returns {HttpAction}
+   */
   headers(headers) {
     this._headers = headers;
     this.setHeaders = true;
     return this;
   }
 
+  /**
+   * 
+   * @param {*} rawBody 
+   * @returns {HttpAction}
+   */
   bodyObject(rawBody) {
     if (rawBody) {
       this._body = JSON.stringify(rawBody);
@@ -68,9 +89,19 @@ class HttpAction {
     return this;
   }
 
+  /**
+   * 
+   * @returns {boolean}
+   */
   isReady() {
     return this.setUrl && this.setMethod && this.setHeaders && this.setBody;
   }
+  /**
+   * 
+   * @throws {DOMException} - AbortError by abort controller when timeout
+   * @throws {Error} - customized error (include response error)
+   * @returns {*}
+   */
   async send() {
     if (!this.isReady()) {
       const error = new Error(
@@ -92,7 +123,14 @@ class HttpAction {
       fetchArgs.headers["Content-Type"] = "application/json";
     }
     console.log("URL:" + this._generalUrl)
+    const abortCtl = new AbortController()
+    const timeOutId = setTimeout(() => {
+      abortCtl.abort()
+    }, store.timeOutTime);
+    // fetchArgs.signal = abortCtl.signal
+    fetchArgs.signal = AbortSignal.timeout(store.timeOutTime)
     const response = await fetch(this._generalUrl, fetchArgs);
+    clearTimeout(timeOutId)
     const responseData = await response.json();
     if (!response.ok || responseData.code != 200) {
       const error = new Error(responseData.message || HttpAction.defaultErrMsg);
@@ -122,8 +160,12 @@ class HttpAction {
     //         console.error(error)
     //     })
   }
+  
+  /**
+   * 
+   * @deprecated
+   */
   async sendWith(doWithResp, ...optional) {
-    // Deprecated
     const responseData = await this.send();
     let retVal;
     if (optional) {
@@ -154,6 +196,12 @@ class Get extends HttpAction {
   // 注意：get-query已实现如下
   // addQuery是保存操作，但不检查url是否已填写完成
   // 虽然实现上可以在addQurey后再添加再保存，但...
+  /**
+   * 
+   * @param {string} name 
+   * @param {*} value 
+   * @returns {Get}
+   */
   query(name, value) {
     let queryPairStr = String(name) + "=" + String(value);
     if (this.queryUrl || this.queryAdded) {
