@@ -1,8 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { Search } from '@element-plus/icons-vue'
-// import { Get } from "@/web/comm"
-// import { ElMessage } from 'element-plus'
 import { store } from '@/store/store'
 
 import { getUserInfo, UserInfo, getAchvStatus } from './users'
@@ -16,7 +14,6 @@ const users_level = ref('level')
 const users_achv = ref([])
 
 const input_str = ref('')
-// const disable_input = ref(false)
 function test() {
     throw new Error("it's a error")
 }
@@ -24,23 +21,11 @@ function test() {
  * @throws {Error} - customized error
  */
 async function getHeat() {
-    // disable_input.value = true
-    // try {
-    //     const response = await new Get()
-    //         .url("api", "user", input_str.value)
-    //         .send()
-    //     users_heat.value = response.score.toString()
-    //     users_id.value = input_str.value
-    // } catch (error) {
-    //     ElMessage.error(error.toString())
-    // }
-    // disable_input.value = false
     store.inputDisable = true
     if (!strIsInt(input_str.value)) {
         // input_str.value = ''
         throw new Error(store.error_messages.get('illegalInputError'))
     }
-    // refreshCard(new UserInfo(parseInt(input_str.value),2,7000,6000,1100))
     refreshCard(await getUserInfo(parseInt(input_str.value)))
     store.inputDisable = false
 }

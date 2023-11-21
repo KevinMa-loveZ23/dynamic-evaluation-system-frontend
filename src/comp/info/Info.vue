@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { store } from "@/store/store"
-// import { Post } from "@/web/comm"
 
 import { uploadJsonFile } from './info'
 
@@ -24,21 +23,6 @@ const handleRequest = (e) => {
     const reader = new FileReader();
     reader.readAsText(e.file, 'UTF-8');
     reader.onload = async fileReader => {
-        // const fileData = fileReader.target.result;
-        // console.log(JSON.parse(fileData));
-        // console.log(JSON.parse(reader.result));
-        // try {
-        //     const response = await new Post()
-        //         .url("api","info")
-        //         .bodyObject(JSON.parse(reader.result))
-        //         .send()
-        //     ElMessage({
-        //         message: "上传成功",
-        //         type: "success"
-        //     })
-        // } catch (error) {
-        //     ElMessage.error(error.toString())
-        // }
         await uploadJsonFile(reader.result)
         ElMessage({
             message: "上传成功",

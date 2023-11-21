@@ -5,10 +5,7 @@ import App from './App.vue'
 
 import * as VueRouter from 'vue-router'
 
-// import { ElementPlus } from '@element-plus/icons-vue/dist/types'
-// import '@element-plus/icons-vue/dist/index.css'
 import ElementPlus from 'element-plus'
-// import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 
 import { store } from '@/store/store'

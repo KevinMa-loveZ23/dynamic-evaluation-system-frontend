@@ -1,8 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { Search } from '@element-plus/icons-vue'
-// import { Get } from "@/web/comm"
-// import { ElMessage } from 'element-plus'
 
 import { store } from '@/store/store'
 import { getPostInfo, PostInfo } from './posts'
@@ -13,23 +11,10 @@ const posts_heat = ref('heat')
 const posts_id = ref('id')
 
 const input_str = ref('')
-// const disable_input = ref(false)
 /**
  * @throws {Error} - customized error
  */
 async function getHeat() {
-    // disable_input.value = true
-    // try {
-    //     const response = await new Get()
-    //         .url("api", "post", input_str.value)
-    //         .send()
-    //     posts_heat.value = response.score.toString()
-    //     posts_id.value = input_str.value
-    // } catch (error) {
-    //     console.log(error.toString())
-    //     ElMessage.error(error.toString())
-    // }
-    // disable_input.value = false
     store.inputDisable = true
     if (!strIsInt(input_str.value)) {
         // input_str.value = ''

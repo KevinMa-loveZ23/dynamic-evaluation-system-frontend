@@ -1,42 +1,16 @@
 <script setup>
 import { ref } from 'vue';
 import { Search } from '@element-plus/icons-vue'
-// import { Get } from "@/web/comm"
-// import { ElMessage } from 'element-plus'
 
 import { store } from '@/store/store'
 import { getTopNPosts, PostInfo } from './posts';
 import { strIsInt } from '@/comp/check'
 
-// const shortcuts = [
-//     {
-//         text: '今天',
-//         value: new Date(),
-//     },
-//     {
-//         text: '昨天',
-//         value: () => {
-//             const date = new Date()
-//             date.setTime(date.getTime() - 3600 * 1000 * 24)
-//             return date
-//         },
-//     },
-//     {
-//         text: '一周前',
-//         value: () => {
-//             const date = new Date()
-//             date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-//             return date
-//         },
-//     },
-// ]
 const timestamp = ref(1)
 const disable_date_input = ref(false)
 
 const field_str = ref('')
-// const disable_field_input = ref(false)
 const range_number = ref(1)
-// const disable_range_input = ref(false)
 
 const stamped_time = ref('time')
 const field_id = ref('type')
@@ -47,24 +21,6 @@ const result_list = ref([])
  * @throws {Error} - customized error
  */
 async function getTopN() {
-    // disable_field_input.value = true
-    // disable_range_input.value = true
-    // try {
-    //     const response = await new Get()
-    //         .url("api", "post", "sort")
-    //         .query("n", range_number.value)
-    //         .query("type", field_str.value)
-    //         .addQuery()
-    //         .send()
-    //     result_list.value = response
-    //     result_list.value.sort((a, b) => {return b.score - a.score})
-    //     field_id.value = field_str.value
-    //     range.value = range_number.value.toString()
-    // } catch (error) {
-    //     ElMessage.error(error.toString())
-    // }
-    // disable_field_input.value = false
-    // disable_range_input.value = false
     store.inputDisable = true
     if (!strIsInt(field_str.value)) {
         // field_str.value = ''
@@ -87,15 +43,6 @@ function refreshCard(postInfoList) {
 </script>
 <template>
     <div>
-        <!-- <span>于</span>
-        <el-date-picker
-            v-model="timestamp"
-            type="datetime"
-            placeholder="选择日期和时间"
-            :shortcuts="shortcuts"
-            :disabled="disable_date_input"
-        />
-        <span>以前</span> -->
         <span>于</span>
         <el-input-number
             placeholder="N"
