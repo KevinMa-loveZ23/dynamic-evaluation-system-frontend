@@ -33,7 +33,7 @@ const router = VueRouter.createRouter({
 const errorHandler = (error, vm, info) => {
     console.log(error.toString())
     if (error.name == 'AbortError') {
-        ElMessage.error(store.error_messages.get('timeoutError'))
+        ElMessage.error(store.error_messages.get('timeoutError') + "（"+ (store.timeOutTime / 1000) + "秒）")
     } else {
         ElMessage.error(error.message)
     }

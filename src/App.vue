@@ -1,60 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 
-// import PostsHeat from './comp/posts/PostsHeat.vue'
-// import PostsInfluence from './comp/posts/PostsInfluence.vue';
-// import UsersHeat from './comp/users/UsersHeat.vue';
-// import UsersInfluence from './comp/users/UsersInfluence.vue';
-
 import { store } from '@/store/store'
 
-// import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
 const openeds = [store.list_names[0][0].path, store.list_names[1][0].path]
-// const actived = store.list_names[0][1].path
-// const list_names = [
-//   [
-//     "帖子Posts",
-//     {name: "帖子热度值", path: "posts-heat"},
-//     {name: "影响力前N帖子", path: "posts-influence"},
-//   ],
-//   [
-//     "用户Users",
-//     {name: "用户热度值", path: "users-heat"},
-//     {name: "影响力前N用户", path: "users-influence"},
-//   ],
-//   [
-//     "提交数据Info",
-//     {name: "提交数据", path: "info"},
-//   ]
-// ]
-// function getItemName(index) {
-//   switch (index) {
-//     case "posts-heat":
-//       return list_names[0][1].name
-//       break;
-//     case "posts-influence":
-//       return list_names[0][2].name
-//       break;
-//     case "users-heat":
-//       return list_names[1][1].name
-//       break;
-//     case "users-influence":
-//       return list_names[1][2].name
-//       break;
-//     case "info":
-//       return list_names[2][1].name
-//       break;
-  
-//     default:
-//       break;
-//   }
-// }
 
-const currentItemName = ref('')
-function selectItem(index, indexPath, item, routerResult) {
-  currentItemName.value = store.getItemName(index)
-}
 </script>
 
 <template>
@@ -69,15 +19,20 @@ function selectItem(index, indexPath, item, routerResult) {
   <main>
     <TheWelcome />
   </main> -->
-  <div :style="{display: 'flex', justifyContent: 'center', alignItems: 'center'}">
+  <div :style="{
+    display: 'flex', justifyContent: 'center', alignItems: 'center',
+    height: '90%', width:'90%',
+    }"
+  >
     <el-container :style="{
-      height: '75vh', width:'75vw',
+      height: '100%', width: '100%',
       borderRadius: 'var(--el-border-radius-base)', border: '1px solid var(--el-border-color)'
       }">
       <el-header :style="{
         height: '10%', magrin: 'auto', top: '50%',
         borderBottom: '1px solid var(--el-border-color)',
-        display: 'flex', alignItems: 'center'
+        display: 'flex', alignItems: 'center',
+        fontSize: '1.25rem'
         }">
         <span>稳定社区影响力评估系统</span>
       </el-header>
@@ -93,7 +48,6 @@ function selectItem(index, indexPath, item, routerResult) {
             :router="true"
             @open="handleOpen"
             @close="handleClose"
-            @select="selectItem"
           >
           <!-- :default-active="actived" -->
             <el-sub-menu :index="store.list_names[0][0].path">
@@ -116,11 +70,15 @@ function selectItem(index, indexPath, item, routerResult) {
           </el-menu>
         </el-aside>
         <el-main>
-          <el-card>
-            <template #header>{{ currentItemName }}</template>
+          <el-card :style="{
+            // fontSize: '1.5rem'
+            }"
+            v-loading="store.inputDisable"
+          >
+            <template #header>{{ store.router_names.get(this.$route.path.substring(1)) }}</template>
             <!-- <PostsInfluence/> -->
             <!-- <el-scrollbar max-height="45vh"> -->
-              <router-view></router-view>
+              <router-view/>
             <!-- </el-scrollbar> -->
           </el-card>
         </el-main>
@@ -129,6 +87,27 @@ function selectItem(index, indexPath, item, routerResult) {
   </div>
 
 </template>
+
+<style>
+.functionalSingleLine + .functionalSingleLine {
+  margin-top: 3px;
+}
+#app {
+  /* font-size: larger; */
+  max-width: 100vw;
+  max-height: 100vh;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+</style>
 
 <style scoped>
 /* header {

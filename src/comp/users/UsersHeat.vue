@@ -26,7 +26,8 @@ async function getHeat() {
         // input_str.value = ''
         throw new Error(store.error_messages.get('illegalInputError'))
     }
-    refreshCard(await getUserInfo(parseInt(input_str.value)))
+    // refreshCard(await getUserInfo(parseInt(input_str.value)))
+    refreshCard(new UserInfo(parseInt(input_str.value), 5, 777, 34, 666))
     store.inputDisable = false
 }
 /**
@@ -34,7 +35,8 @@ async function getHeat() {
  * @param {UserInfo} userInfo - user's info
  */
 function refreshCard(userInfo) {
-    users_type.value = userInfo.type
+    // users_type.value = userInfo.type
+    users_type.value = store.field_names.find((item) => item.id == userInfo.type).label
     users_id.value = userInfo.userId
     users_heat.value = userInfo.score
     users_level.value = userInfo.level
@@ -42,7 +44,7 @@ function refreshCard(userInfo) {
 }
 </script>
 <template>
-    <span>
+    <div class="functionalSingleLine">
         用户ID：
         <el-input
             placeholder="请输入查询用户ID"
@@ -51,18 +53,16 @@ function refreshCard(userInfo) {
             @keyup.enter.native="getHeat"
         >
             <template #append>
-                <el-button :icon="Search" @click="getHeat" />
+                <el-button :icon="Search" @click="getHeat">搜索</el-button>
             </template>
         </el-input>
-    </span>
-    <div>
-        <span>
-            领域 {{ users_type }} 的用户 {{ users_id }} 的热度值为：{{ users_heat }}
-        </span>
     </div>
-    <div>
+    <div class="functionalSingleLine">
+        领域 {{ users_type }} 的用户 {{ users_id }} 的热度值为：{{ users_heat }}
+    </div>
+    <div class="functionalSingleLine">
         <span>用户等级：{{ users_level }}</span>
-        <el-table :data="users_achv" max-height="30vh" width="50vw">
+        <el-table :data="users_achv" max-height="45vh" width="50vw">
             <el-table-column prop="name" label="成就" width="200" />
             <el-table-column prop="policy" label="条件" width="300" />
             <el-table-column label="状态" width="100">

@@ -29,12 +29,13 @@ async function getHeat() {
  */
 function refreshCard(postInfo) {
     posts_id.value = postInfo.postId
-    posts_type.value = postInfo.type
+    // posts_type.value = postInfo.type
+    posts_type.value = store.field_names.find((item) => item.id == postInfo.type).label
     posts_heat.value = postInfo.score
 }
 </script>
 <template>
-    <span>
+    <div class="functionalSingleLine">
         帖子ID：
         <el-input
             placeholder="请输入查询帖子ID"
@@ -43,12 +44,12 @@ function refreshCard(postInfo) {
             @keyup.enter.native="getHeat"
         >
             <template #append>
-                <el-button :icon="Search" @click="getHeat" />
+                <el-button :icon="Search" @click="getHeat">搜索</el-button>
             </template>
         </el-input>
-    </span>
-    <br/>
-    <span>
+    </div>
+    <!-- <br/> -->
+    <div class="functionalSingleLine">
         领域 {{ posts_type }} 的帖子 {{ posts_id }} 的热度值为：{{ posts_heat }}
-    </span>
+    </div>
 </template>
