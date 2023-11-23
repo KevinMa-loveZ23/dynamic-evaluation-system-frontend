@@ -75,7 +75,7 @@ const openeds = [store.list_names[0][0].path, store.list_names[1][0].path]
             }"
             v-loading="store.inputDisable"
           >
-            <template #header>{{ store.router_names.get(this.$route.path.substring(1)) }}</template>
+            <template #header>{{ store.router_names.get($route.path.substring(1)) }}</template>
             <!-- <PostsInfluence/> -->
             <!-- <el-scrollbar max-height="45vh"> -->
               <router-view/>
