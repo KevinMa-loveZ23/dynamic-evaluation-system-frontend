@@ -26,8 +26,8 @@ async function getHeat() {
         // input_str.value = ''
         throw new Error(store.error_messages.get('illegalInputError'))
     }
-    // refreshCard(await getUserInfo(parseInt(input_str.value)))
-    refreshCard(new UserInfo(parseInt(input_str.value), 5, 777, 34, 666))
+    refreshCard(await getUserInfo(parseInt(input_str.value)))
+    // refreshCard(new UserInfo(parseInt(input_str.value), 5, 777, 34, 666))
     store.inputDisable = false
 }
 /**
