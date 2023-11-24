@@ -123,14 +123,18 @@ class HttpAction {
       fetchArgs.headers["Content-Type"] = "application/json";
     }
     console.log("URL:" + this._generalUrl)
+
     const abortCtl = new AbortController()
     const timeOutId = setTimeout(() => {
       abortCtl.abort()
     }, store.timeOutTime);
-    // fetchArgs.signal = abortCtl.signal
-    fetchArgs.signal = AbortSignal.timeout(store.timeOutTime)
+    fetchArgs.signal = abortCtl.signal
+    // fetchArgs.signal = AbortSignal.timeout(store.timeOutTime)
+
     const response = await fetch(this._generalUrl, fetchArgs);
+    
     clearTimeout(timeOutId)
+
     const responseData = await response.json();
     if (!response.ok || responseData.code != 200) {
       const error = new Error(responseData.message || HttpAction.defaultErrMsg);

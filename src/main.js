@@ -29,7 +29,10 @@ const router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
     routes,
 })
-
+/**
+ * 
+ * @param {Error} error - error
+ */
 const errorHandler = (error, vm, info) => {
     console.log(error.toString())
     if (error.name == 'AbortError') {
