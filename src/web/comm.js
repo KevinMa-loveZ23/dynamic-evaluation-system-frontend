@@ -12,6 +12,9 @@ class HttpAction {
     // this.setHeaders = false;
     this.setHeaders = true;
     this.setBody = false;
+
+    this.abortCtl = new AbortController()
+    this.sendStarted = false
   }
   // constructor(url, method, headers, rawBody) {
   //     this.init()
@@ -90,6 +93,15 @@ class HttpAction {
   }
 
   /**
+   * abort request
+   */
+  abort() {
+    if (this.sendStarted) {
+      this.abortCtl.abort()
+    }
+  }
+
+  /**
    * 
    * @returns {boolean}
    */
@@ -98,7 +110,7 @@ class HttpAction {
   }
   /**
    * 
-   * @throws {DOMException} - AbortError by abort controller when timeout
+   * @throws {DOMException} - AbortError by abort controller when timeout or manually
    * @throws {Error} - customized error (include response error)
    * @returns {*}
    */
@@ -124,15 +136,16 @@ class HttpAction {
     }
     console.log("URL:" + this._generalUrl)
 
-    const abortCtl = new AbortController()
+    
     const timeOutId = setTimeout(() => {
-      abortCtl.abort()
+      this.abortCtl.abort()
     }, store.timeOutTime);
-    fetchArgs.signal = abortCtl.signal
+    fetchArgs.signal = this.abortCtl.signal
+    this.sendStarted = true
     // fetchArgs.signal = AbortSignal.timeout(store.timeOutTime)
 
     const response = await fetch(this._generalUrl, fetchArgs);
-    
+
     clearTimeout(timeOutId)
 
     const responseData = await response.json();

@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-
 import { store } from '@/store/store'
 
 const openeds = [store.list_names[0][0].path, store.list_names[1][0].path]
@@ -91,21 +89,6 @@ const openeds = [store.list_names[0][0].path, store.list_names[1][0].path]
 <style>
 .functionalSingleLine + .functionalSingleLine {
   margin-top: 3px;
-}
-#app {
-  /* font-size: larger; */
-  max-width: 100vw;
-  max-height: 100vh;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
 }
 </style>
 
