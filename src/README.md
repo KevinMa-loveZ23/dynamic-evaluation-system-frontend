@@ -21,8 +21,8 @@ Favicon for the page.
 
 ### ./assets/main.css
 
-Main Css Definition of App.  
-应用的主要 Css 定义。
+Main CSS Definition of App.  
+应用的主要 CSS 定义。
 
 ## ./comp/ (Components - 组件目录)
 
